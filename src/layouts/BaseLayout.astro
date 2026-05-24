@@ -35,6 +35,7 @@ const localBusiness = {
   "@context": "https://schema.org",
   "@type": "ClothingStore",
   name: site.name,
+  alternateName: "Margo",
   description,
   image: ogImage,
   telephone: site.phoneDisplay,
@@ -46,8 +47,18 @@ const localBusiness = {
     addressCountry: "AZ",
   },
   openingHours: "Mo-Su 10:00-21:00",
+  priceRange: "$$",
+  areaServed: ["Baku", "Azerbaijan"],
   sameAs: [site.instagram],
   hasMap: contactLinks.maps,
+};
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  alternateName: "Margo",
+  url: site.url,
+  inLanguage: languages.map((language) => language.locale),
 };
 ---
 
@@ -59,6 +70,9 @@ const localBusiness = {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="application-name" content={site.name} />
+    <meta name="apple-mobile-web-app-title" content={site.name} />
     <link rel="canonical" href={canonical} />
     {alternates.map((alternate) => <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />)}
     <link rel="alternate" hreflang="x-default" href={absoluteUrl(getDefaultPagePath(page))} />
@@ -81,7 +95,7 @@ const localBusiness = {
         document.documentElement.dataset.theme = saved || preferred;
       })();
     </script>
-    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    <script type="application/ld+json" set:html={JSON.stringify([localBusiness, websiteSchema])} />
   </head>
   <body class="min-h-screen text-ink antialiased">
     <Header lang={lang} page={page} />
