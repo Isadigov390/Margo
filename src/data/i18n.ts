@@ -1,0 +1,313 @@
+import { site, type SiteLang } from "@/data/site";
+import { withBase } from "@/data/urls";
+
+export type Lang = SiteLang;
+export type PageKey = "home" | "collection" | "contact";
+
+export const defaultLang: Lang = "az";
+
+export const languages: Array<{ code: Lang; label: string; short: string; locale: string }> = [
+  { code: "az", label: "Azərbaycanca", short: "AZ", locale: "az-AZ" },
+  { code: "ru", label: "Русский", short: "RU", locale: "ru-AZ" },
+  { code: "en", label: "English", short: "EN", locale: "en" },
+];
+
+const pagePaths: Record<PageKey, string> = {
+  home: "",
+  collection: "collection",
+  contact: "contact",
+};
+
+export function getPagePath(lang: Lang, page: PageKey) {
+  const suffix = pagePaths[page];
+  return withBase(suffix ? `/${lang}/${suffix}` : `/${lang}`);
+}
+
+export function getDefaultPagePath(page: PageKey) {
+  const suffix = pagePaths[page];
+  return withBase(suffix ? `/${suffix}` : "/");
+}
+
+export function getLangFromParam(value: string | undefined): Lang {
+  return languages.some((language) => language.code === value) ? (value as Lang) : defaultLang;
+}
+
+export const translations = {
+  az: {
+    nav: {
+      home: "Ana səhifə",
+      collection: "Kolleksiya",
+      contact: "Əlaqə",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      call: "Zəng et",
+      mobileMenu: "Menyunu aç",
+      mobileWhatsapp: "WhatsApp-da yazın",
+      boutiqueLabel: "Bakı qadın geyim mağazası",
+      primaryNavigation: "Əsas naviqasiya",
+      mobileNavigation: "Mobil naviqasiya",
+      language: "Dil",
+      theme: "Rejim",
+      light: "İşıqlı",
+      dark: "Qaranlıq",
+    },
+    buttons: {
+      whatsapp: "WhatsApp-da soruş",
+      instagram: "Instagram-a bax",
+      directions: "Ünvanı göstər",
+      collection: "Kolleksiyaya bax",
+      call: "Zəng et",
+    },
+    seo: {
+      homeTitle: "Margo Boutique | Bakı Qadın Geyim Mağazası",
+      homeDescription: "Margo Boutique Bakıda qadın geyimləri, donlar, gündəlik obrazlar və yeni kolleksiyalar təqdim edir. WhatsApp ilə ölçü, rəng və mövcudluğu soruşun.",
+      collectionTitle: "Kolleksiya | Margo Boutique Bakı",
+      contactTitle: "Əlaqə | Margo Boutique Bakı",
+    },
+    home: {
+      heroEyebrow: "Yeni kolleksiya",
+      heroTitle: "Yeni kolleksiya artıq Margo Boutique-də",
+      heroText: "Donlar, gündəlik geyimlər və zərif yay obrazları üçün seçilmiş modellər.",
+      statsModels: "yeni model",
+      statsWhatsapp: "ölçü sorğusu",
+      statsInstagram: "real postlar",
+      featuredEyebrow: "Yeni kolleksiya",
+      featuredTitle: "Instagram-dakı ən çox seçilən modellər.",
+      aboutEyebrow: "Margo Boutique",
+      aboutTitle: "Real butik kataloqu, real modellər, sürətli WhatsApp əlaqəsi.",
+      aboutText: "Yeni gələn donlar, dəstlər və yay obrazları Instagram ruhunda vizual şəkildə təqdim olunur. Ölçü, rəng və mövcudluq haqqında WhatsApp-da soruşa bilərsiniz.",
+      feedEyebrow: "Boutique feed",
+      feedTitle: "Kolleksiyadan vizual seçmə.",
+      instagramEyebrow: "Instagram",
+      instagramTitle: "Instagram-da daha çox model",
+      instagramText: "Yeni gələn modellər, real kombinlər və butik yenilikləri Instagram səhifəsində paylaşılır.",
+      instagramButton: "Instagram səhifəsinə keç",
+      contactTitle: "Margo Boutique, Bakı",
+      contactText: "Sarayevo küçəsi 162C / 162-168, Bakı, Azərbaycan. Ölçü, rəng və mövcudluq haqqında WhatsApp-da soruşa bilərsiniz.",
+      ctaTitle: "Bəyəndiyiniz modeli WhatsApp-da soruşun",
+      ctaText: "Ölçü, rəng, qiymət və mövcudluq haqqında birbaşa Margo Boutique ilə əlaqə saxlayın.",
+    },
+    collection: {
+      eyebrow: "Kolleksiya",
+      title: "Margo Boutique yeni modelləri",
+      text: "Donlar, dəstlər, klassik obrazlar və ziyafət modelləri. Hər məhsul üçün ölçü, rəng və qiyməti WhatsApp-da soruşa bilərsiniz.",
+      feedEyebrow: "Instagram feed",
+      feedTitle: "Real fotolarla seçilmiş butik kataloqu.",
+      ctaTitle: "Seçdiyiniz modeli WhatsApp-da soruşun",
+      ctaText: "Margo Boutique komandası ölçü, rəng, qiymət və mövcudluq haqqında tez cavab verəcək.",
+    },
+    contact: {
+      eyebrow: "Əlaqə",
+      title: "Margo Boutique ilə əlaqə",
+      text: "Ölçü, rəng və mövcudluq haqqında WhatsApp-da soruşa bilərsiniz.",
+      details: "Mağaza məlumatları",
+      phone: "Telefon / WhatsApp",
+      address: "Ünvan",
+      note: "Qeyd",
+      noteText: "Ölçü, rəng və mövcudluq haqqında WhatsApp-da soruşa bilərsiniz.",
+      mapTitle: "Google xəritədə Margo Boutique",
+      mapText: "Mağazaya rahat gəlmək üçün Google Maps düyməsindən istifadə edin.",
+      ctaTitle: "Yeni modellər üçün WhatsApp-da yazın",
+      ctaText: "Bəyəndiyiniz məhsulun ölçü, rəng və qiymət məlumatını birbaşa soruşa bilərsiniz.",
+    },
+    cta: {
+      eyebrow: "Yeni kolleksiya",
+      title: "Bəyəndiyiniz modeli WhatsApp-da soruşun",
+      text: "Ölçü, rəng, qiymət və mövcudluq haqqında birbaşa Margo Boutique ilə əlaqə saxlayın.",
+    },
+    footer: {
+      description: "Bakıda qadın geyimləri, donlar, gündəlik obrazlar və zərif yay kolleksiyaları.",
+      visit: "Ünvan",
+      contact: "Əlaqə",
+      copyright: "Frontend-only statik vebsayt.",
+    },
+    hours: "Hər gün, 10:00-21:00",
+    address: "Sarayevo küçəsi 162C / 162-168, Bakı, Azərbaycan",
+  },
+  ru: {
+    nav: {
+      home: "Главная",
+      collection: "Коллекция",
+      contact: "Контакты",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      call: "Позвонить",
+      mobileMenu: "Открыть меню",
+      mobileWhatsapp: "Написать в WhatsApp",
+      boutiqueLabel: "Женская одежда в Баку",
+      primaryNavigation: "Основная навигация",
+      mobileNavigation: "Мобильная навигация",
+      language: "Язык",
+      theme: "Тема",
+      light: "Светлая",
+      dark: "Темная",
+    },
+    buttons: {
+      whatsapp: "Спросить в WhatsApp",
+      instagram: "Смотреть Instagram",
+      directions: "Показать адрес",
+      collection: "Смотреть коллекцию",
+      call: "Позвонить",
+    },
+    seo: {
+      homeTitle: "Margo Boutique | Женская одежда в Баку",
+      homeDescription: "Margo Boutique в Баку представляет женскую одежду, платья, повседневные образы и новые коллекции. Спросите размер, цвет и наличие в WhatsApp.",
+      collectionTitle: "Коллекция | Margo Boutique Баку",
+      contactTitle: "Контакты | Margo Boutique Баку",
+    },
+    home: {
+      heroEyebrow: "Новая коллекция",
+      heroTitle: "Новая коллекция уже в Margo Boutique",
+      heroText: "Подобранные модели платьев, повседневных образов и элегантных летних комплектов.",
+      statsModels: "новых моделей",
+      statsWhatsapp: "запрос размера",
+      statsInstagram: "реальные посты",
+      featuredEyebrow: "Новая коллекция",
+      featuredTitle: "Самые заметные модели из Instagram.",
+      aboutEyebrow: "Margo Boutique",
+      aboutTitle: "Реальный бутик-каталог, реальные модели и быстрая связь в WhatsApp.",
+      aboutText: "Новые платья, комплекты и летние образы представлены визуально, как в Instagram. Размер, цвет и наличие можно уточнить в WhatsApp.",
+      feedEyebrow: "Boutique feed",
+      feedTitle: "Визуальная подборка из коллекции.",
+      instagramEyebrow: "Instagram",
+      instagramTitle: "Больше моделей в Instagram",
+      instagramText: "Новые поступления, реальные образы и новости бутика публикуются на странице Instagram.",
+      instagramButton: "Перейти в Instagram",
+      contactTitle: "Margo Boutique, Баку",
+      contactText: "Улица Сараево 162C / 162-168, Баку, Азербайджан. Размер, цвет и наличие можно уточнить в WhatsApp.",
+      ctaTitle: "Спросите о понравившейся модели в WhatsApp",
+      ctaText: "Свяжитесь с Margo Boutique напрямую, чтобы узнать размер, цвет, цену и наличие.",
+    },
+    collection: {
+      eyebrow: "Коллекция",
+      title: "Новые модели Margo Boutique",
+      text: "Платья, комплекты, классические образы и вечерние модели. По каждому товару можно уточнить размер, цвет и цену в WhatsApp.",
+      feedEyebrow: "Instagram feed",
+      feedTitle: "Бутик-каталог с реальными фото.",
+      ctaTitle: "Спросите выбранную модель в WhatsApp",
+      ctaText: "Команда Margo Boutique быстро ответит по размеру, цвету, цене и наличию.",
+    },
+    contact: {
+      eyebrow: "Контакты",
+      title: "Связаться с Margo Boutique",
+      text: "Размер, цвет и наличие можно уточнить в WhatsApp.",
+      details: "Информация о магазине",
+      phone: "Телефон / WhatsApp",
+      address: "Адрес",
+      note: "Примечание",
+      noteText: "Размер, цвет и наличие можно уточнить в WhatsApp.",
+      mapTitle: "Margo Boutique на Google Maps",
+      mapText: "Используйте кнопку Google Maps, чтобы удобно добраться до магазина.",
+      ctaTitle: "Напишите в WhatsApp о новых моделях",
+      ctaText: "Можно напрямую уточнить размер, цвет и цену понравившегося товара.",
+    },
+    cta: {
+      eyebrow: "Новая коллекция",
+      title: "Спросите о понравившейся модели в WhatsApp",
+      text: "Свяжитесь с Margo Boutique напрямую, чтобы узнать размер, цвет, цену и наличие.",
+    },
+    footer: {
+      description: "Женская одежда, платья, повседневные образы и элегантные летние коллекции в Баку.",
+      visit: "Адрес",
+      contact: "Контакты",
+      copyright: "Frontend-only статический сайт.",
+    },
+    hours: "Ежедневно, 10:00-21:00",
+    address: "Улица Сараево 162C / 162-168, Баку, Азербайджан",
+  },
+  en: {
+    nav: {
+      home: "Home",
+      collection: "Collection",
+      contact: "Contact",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      call: "Call",
+      mobileMenu: "Open menu",
+      mobileWhatsapp: "Chat on WhatsApp",
+      boutiqueLabel: "Women's clothing in Baku",
+      primaryNavigation: "Primary navigation",
+      mobileNavigation: "Mobile navigation",
+      language: "Language",
+      theme: "Theme",
+      light: "Light",
+      dark: "Dark",
+    },
+    buttons: {
+      whatsapp: "Ask on WhatsApp",
+      instagram: "View Instagram",
+      directions: "Get Directions",
+      collection: "View Collection",
+      call: "Call",
+    },
+    seo: {
+      homeTitle: "Margo Boutique | Women's Clothing Store in Baku",
+      homeDescription: "Margo Boutique presents women's clothing, dresses, everyday looks, and new collections in Baku. Ask about size, color, and availability on WhatsApp.",
+      collectionTitle: "Collection | Margo Boutique Baku",
+      contactTitle: "Contact | Margo Boutique Baku",
+    },
+    home: {
+      heroEyebrow: "New collection",
+      heroTitle: "The new collection is now at Margo Boutique",
+      heroText: "Selected dresses, everyday outfits, and elegant summer looks.",
+      statsModels: "new models",
+      statsWhatsapp: "size requests",
+      statsInstagram: "real posts",
+      featuredEyebrow: "New collection",
+      featuredTitle: "Most-loved pieces from Instagram.",
+      aboutEyebrow: "Margo Boutique",
+      aboutTitle: "A real boutique catalogue, real models, and fast WhatsApp contact.",
+      aboutText: "New dresses, sets, and summer looks are presented visually with an Instagram boutique feel. You can ask about size, color, and availability on WhatsApp.",
+      feedEyebrow: "Boutique feed",
+      feedTitle: "A visual edit from the collection.",
+      instagramEyebrow: "Instagram",
+      instagramTitle: "More models on Instagram",
+      instagramText: "New arrivals, real outfits, and boutique updates are shared on the Instagram page.",
+      instagramButton: "Open Instagram page",
+      contactTitle: "Margo Boutique, Baku",
+      contactText: "Sarayevo Street 162C / 162-168, Baku, Azerbaijan. You can ask about size, color, and availability on WhatsApp.",
+      ctaTitle: "Ask about your favorite model on WhatsApp",
+      ctaText: "Contact Margo Boutique directly for size, color, price, and availability.",
+    },
+    collection: {
+      eyebrow: "Collection",
+      title: "New Margo Boutique models",
+      text: "Dresses, sets, classic looks, and evening pieces. Ask about size, color, and price for every product on WhatsApp.",
+      feedEyebrow: "Instagram feed",
+      feedTitle: "A boutique catalogue with real photos.",
+      ctaTitle: "Ask about your selected model on WhatsApp",
+      ctaText: "The Margo Boutique team can quickly help with size, color, price, and availability.",
+    },
+    contact: {
+      eyebrow: "Contact",
+      title: "Contact Margo Boutique",
+      text: "You can ask about size, color, and availability on WhatsApp.",
+      details: "Store information",
+      phone: "Phone / WhatsApp",
+      address: "Address",
+      note: "Note",
+      noteText: "You can ask about size, color, and availability on WhatsApp.",
+      mapTitle: "Margo Boutique on Google Maps",
+      mapText: "Use the Google Maps button for easy directions to the store.",
+      ctaTitle: "Message us on WhatsApp for new models",
+      ctaText: "You can ask directly about the size, color, and price of the product you like.",
+    },
+    cta: {
+      eyebrow: "New collection",
+      title: "Ask about your favorite model on WhatsApp",
+      text: "Contact Margo Boutique directly for size, color, price, and availability.",
+    },
+    footer: {
+      description: "Women's clothing, dresses, everyday looks, and elegant summer collections in Baku.",
+      visit: "Visit",
+      contact: "Contact",
+      copyright: "Frontend-only static website.",
+    },
+    hours: "Daily, 10:00-21:00",
+    address: "Sarayevo Street 162C / 162-168, Baku, Azerbaijan",
+  },
+} as const;
+
+export function t(lang: Lang) {
+  return translations[lang];
+}

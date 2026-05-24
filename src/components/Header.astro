@@ -1,0 +1,143 @@
+---
+import Icon from "@/components/Icon.astro";
+import { getCallLink, getWhatsappLink, site } from "@/data/site";
+import { getPagePath, languages, t, type Lang, type PageKey } from "@/data/i18n";
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+}
+
+const { lang, page } = Astro.props;
+const copy = t(lang);
+const navItems = [
+  { href: getPagePath(lang, "home"), label: copy.nav.home },
+  { href: getPagePath(lang, "collection"), label: copy.nav.collection },
+  { href: getPagePath(lang, "contact"), label: copy.nav.contact },
+];
+const whatsappLink = getWhatsappLink(lang);
+const iconButton =
+  "focus-ring inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-espresso/15 bg-cream/70 text-ink transition hover:border-champagne hover:bg-champagne/20 sm:h-11 sm:w-11";
+---
+
+<header class="sticky top-0 z-50 border-b border-espresso/10 bg-ivory/92 backdrop-blur-md">
+  <div class="container-pad flex min-h-18 items-center justify-between gap-2 py-3">
+    <a href={getPagePath(lang, "home")} class="focus-ring flex min-w-0 items-center gap-3" aria-label={`${site.name} ${copy.nav.home}`}>
+      <img
+        class="h-9 w-auto max-w-[7.25rem] object-contain sm:h-12 sm:max-w-[12rem]"
+        src={site.logo}
+        alt="Margo Boutique"
+        width="240"
+        height="72"
+        decoding="async"
+      />
+      <span class="hidden whitespace-nowrap text-[0.64rem] font-semibold uppercase leading-snug tracking-[0.18em] text-rose 2xl:block">
+        {copy.nav.boutiqueLabel}
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label={copy.nav.primaryNavigation}>
+      {
+        navItems.map((item) => (
+          <a class="focus-ring text-sm font-semibold text-espresso/75 transition hover:text-ink" href={item.href}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      <div class="hidden items-center rounded-full border border-espresso/10 bg-cream/50 p-1 lg:flex" aria-label={copy.nav.language}>
+        {
+          languages.map((language) => (
+            <a
+              class:list={[
+                "focus-ring rounded-full px-3 py-2 text-xs font-bold transition",
+                language.code === lang ? "bg-ink text-ivory" : "text-espresso/68 hover:text-ink",
+              ]}
+              href={getPagePath(language.code, page)}
+              hreflang={language.locale}
+              aria-label={language.label}
+            >
+              {language.short}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="hidden items-center rounded-full border border-espresso/10 bg-cream/50 p-1 lg:flex" aria-label={copy.nav.theme}>
+        <button class="focus-ring rounded-full p-2 text-espresso/70 transition hover:text-ink" type="button" data-theme-choice="light" aria-label={copy.nav.light}>
+          <Icon name="sun" class="h-4 w-4" />
+        </button>
+        <button class="focus-ring rounded-full p-2 text-espresso/70 transition hover:text-ink" type="button" data-theme-choice="dark" aria-label={copy.nav.dark}>
+          <Icon name="moon" class="h-4 w-4" />
+        </button>
+      </div>
+
+      <a class={iconButton} href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label={copy.nav.whatsapp}>
+        <Icon name="whatsapp" />
+      </a>
+      <a class={iconButton} href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label={copy.nav.instagram}>
+        <Icon name="instagram" />
+      </a>
+      <a class={iconButton} href={getCallLink()} aria-label={`${copy.nav.call}: ${site.phoneDisplay}`}>
+        <Icon name="phone" />
+      </a>
+
+      <details class="relative lg:hidden">
+        <summary class="focus-ring flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-espresso/15 bg-cream/70 text-ink sm:h-11 sm:w-11" aria-label={copy.nav.mobileMenu}>
+          <span class="sr-only">{copy.nav.mobileMenu}</span>
+          <span class="flex w-5 flex-col gap-1.5" aria-hidden="true">
+            <span class="h-0.5 rounded bg-current"></span>
+            <span class="h-0.5 rounded bg-current"></span>
+            <span class="h-0.5 rounded bg-current"></span>
+          </span>
+        </summary>
+        <div class="absolute right-0 top-14 w-[min(92vw,21rem)] rounded-2xl border border-espresso/10 bg-ivory p-3 shadow-2xl shadow-espresso/15">
+          <nav class="grid gap-1" aria-label={copy.nav.mobileNavigation}>
+            {
+              navItems.map((item) => (
+                <a class="focus-ring rounded-xl px-4 py-3 text-sm font-semibold text-espresso transition hover:bg-cream" href={item.href}>
+                  {item.label}
+                </a>
+              ))
+            }
+            <div class="mt-2 grid grid-cols-3 gap-1 rounded-xl border border-espresso/10 bg-cream/50 p-1" aria-label={copy.nav.language}>
+              {
+                languages.map((language) => (
+                  <a
+                    class:list={[
+                      "focus-ring rounded-lg px-3 py-2 text-center text-xs font-bold transition",
+                      language.code === lang ? "bg-ink text-ivory" : "text-espresso/68 hover:text-ink",
+                    ]}
+                    href={getPagePath(language.code, page)}
+                    hreflang={language.locale}
+                    aria-label={language.label}
+                  >
+                    {language.short}
+                  </a>
+                ))
+              }
+            </div>
+            <div class="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-espresso/10 bg-cream/50 p-1" aria-label={copy.nav.theme}>
+              <button class="focus-ring inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-bold text-espresso/75 transition hover:text-ink" type="button" data-theme-choice="light">
+                <Icon name="sun" class="h-4 w-4" /> {copy.nav.light}
+              </button>
+              <button class="focus-ring inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-bold text-espresso/75 transition hover:text-ink" type="button" data-theme-choice="dark">
+                <Icon name="moon" class="h-4 w-4" /> {copy.nav.dark}
+              </button>
+            </div>
+            <div class="mt-2 grid gap-2">
+              <a class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-bold text-ivory" href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <Icon name="whatsapp" /> {copy.nav.mobileWhatsapp}
+              </a>
+              <a class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-espresso/15 px-4 text-sm font-bold text-ink" href={getCallLink()}>
+                <Icon name="phone" /> {copy.nav.call}
+              </a>
+            </div>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,105 @@
+---
+import Icon from "@/components/Icon.astro";
+import { type Lang } from "@/data/i18n";
+import {
+  getProductCategory,
+  getProductDescription,
+  getProductTitle,
+  getProductWhatsappUrl,
+  type BoutiqueProduct,
+} from "@/data/products";
+
+interface Props {
+  product: BoutiqueProduct;
+  lang: Lang;
+  priority?: boolean;
+  large?: boolean;
+}
+
+const { product, lang, priority = false, large = false } = Astro.props;
+const title = getProductTitle(product, lang);
+const ctaCopy = {
+  az: {
+    badge: "Yeni kolleksiya",
+    text: "Qiymət, ölçü və modellər üçün bizimlə əlaqə saxlayın.",
+    whatsapp: "WhatsApp ilə soruş",
+    instagram: "Instagramda bax",
+  },
+  ru: {
+    badge: "Новая коллекция",
+    text: "Свяжитесь с нами, чтобы узнать цену, размер и другие модели.",
+    whatsapp: "Спросить в WhatsApp",
+    instagram: "Смотреть Instagram",
+  },
+  en: {
+    badge: "New collection",
+    text: "Contact us for prices, sizes, and more models.",
+    whatsapp: "Ask via WhatsApp",
+    instagram: "View Instagram",
+  },
+}[lang];
+---
+
+<article
+  class:list={[
+    "group flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-[#e7ded0] bg-[#fffaf1] shadow-sm shadow-[#2a211d]/5 transition duration-300 hover:-translate-y-1 hover:border-[#d9bb7e]/45 hover:shadow-2xl hover:shadow-[#2a211d]/12 dark:border-white/10 dark:bg-[#151110] dark:shadow-black/25 dark:hover:border-[#d9bb7e]/35 dark:hover:shadow-black/45",
+    large && "lg:rounded-[1.6rem]",
+  ]}
+>
+  <a href={product.instagramUrl} target="_blank" rel="noopener noreferrer" class="focus-ring block overflow-hidden bg-[#f6efe3] dark:bg-[#211b18]">
+    <img
+      class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.035]"
+      src={product.image}
+      alt={`${title} - Margo Boutique`}
+      width={product.width}
+      height={product.height}
+      loading={priority ? "eager" : "lazy"}
+      fetchpriority={priority ? "high" : "auto"}
+      decoding="async"
+    />
+  </a>
+
+  <div class="grid flex-1 gap-5 p-5 sm:p-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-stretch">
+    <div class="min-w-0">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#b96b73] dark:text-[#e29aa4]">
+        {getProductCategory(product, lang)}
+      </p>
+      <h3 class="mt-2 font-serif text-[1.55rem] font-semibold leading-tight text-[#171413] dark:text-[#fffaf1]">
+        {title}
+      </h3>
+      <p class="mt-3 text-sm leading-6 text-[#2a211d]/72 dark:text-[#efe4d3]/72">
+        {getProductDescription(product, lang)}
+      </p>
+    </div>
+
+    <aside class="flex flex-col justify-between rounded-[1.05rem] border border-[#e7ded0] bg-[#fdf8ee] p-4 text-[#171413] shadow-lg shadow-[#2a211d]/8 dark:border-[#d9bb7e]/25 dark:bg-[#0f0c0b] dark:text-[#fffaf1] dark:shadow-black/35">
+      <div>
+        <p class="inline-flex rounded-full border border-[#d9bb7e]/45 bg-[#d9bb7e]/18 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#7a541f] dark:border-[#d9bb7e]/45 dark:bg-[#d9bb7e]/12 dark:text-[#f1d18a]">
+          {ctaCopy.badge}
+        </p>
+        <p class="mt-3 text-sm font-medium leading-6 text-[#2a211d]/72 dark:text-[#f8f1e7]/78">{ctaCopy.text}</p>
+      </div>
+
+      <div class="mt-5 grid gap-2">
+        <a
+          class="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#171413] px-4 text-center text-sm font-bold text-[#fffaf1] shadow-sm shadow-[#2a211d]/15 transition hover:bg-[#2a211d] hover:shadow-md hover:shadow-[#2a211d]/20 dark:bg-[#f8f1e7] dark:text-[#141110] dark:hover:bg-[#d9bb7e]"
+          href={getProductWhatsappUrl(product, lang)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${ctaCopy.whatsapp}: ${title}`}
+        >
+          <Icon name="whatsapp" class="h-4 w-4" /> {ctaCopy.whatsapp}
+        </a>
+        <a
+          class="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#2a211d]/16 bg-white/45 px-4 text-center text-sm font-bold text-[#171413] transition hover:border-[#b96b73]/55 hover:bg-[#b96b73]/10 hover:text-[#8f4750] dark:border-[#f8f1e7]/18 dark:bg-transparent dark:text-[#f8f1e7] dark:hover:border-[#d9bb7e] dark:hover:bg-[#d9bb7e]/16"
+          href={product.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${ctaCopy.instagram}: ${title}`}
+        >
+          <Icon name="instagram" class="h-4 w-4" /> {ctaCopy.instagram}
+        </a>
+      </div>
+    </aside>
+  </div>
+</article>

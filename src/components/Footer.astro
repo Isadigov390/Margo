@@ -1,0 +1,44 @@
+---
+import Icon from "@/components/Icon.astro";
+import { getCallLink, getWhatsappLink, site } from "@/data/site";
+import { t, type Lang } from "@/data/i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = t(lang);
+---
+
+<footer class="border-t border-espresso/10 bg-ink text-ivory">
+  <div class="container-pad grid gap-10 py-12 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+    <div>
+      <img class="h-12 w-auto rounded-md object-contain" src={site.logo} alt="Margo Boutique" width="240" height="72" loading="lazy" decoding="async" />
+      <p class="mt-4 max-w-sm text-sm leading-7 text-ivory/72">{copy.footer.description}</p>
+    </div>
+    <div>
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-champagne">{copy.footer.visit}</p>
+      <p class="mt-4 text-sm leading-7 text-ivory/72">{copy.address}</p>
+      <p class="mt-2 text-sm text-ivory/72">{copy.hours}</p>
+    </div>
+    <div>
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-champagne">{copy.footer.contact}</p>
+      <div class="mt-4 grid gap-3 text-sm">
+        <a class="focus-ring inline-flex items-center gap-2 text-ivory/78 transition hover:text-white" href={getWhatsappLink(lang)} target="_blank" rel="noopener noreferrer">
+          <Icon name="whatsapp" class="h-4 w-4" /> {site.phoneDisplay}
+        </a>
+        <a class="focus-ring inline-flex items-center gap-2 text-ivory/78 transition hover:text-white" href={getCallLink()}>
+          <Icon name="phone" class="h-4 w-4" /> {copy.buttons.call}
+        </a>
+        <a class="focus-ring inline-flex items-center gap-2 text-ivory/78 transition hover:text-white" href={site.instagram} target="_blank" rel="noopener noreferrer">
+          <Icon name="instagram" class="h-4 w-4" /> Instagram
+        </a>
+        <a class="focus-ring text-ivory/78 transition hover:text-white" href={site.maps} target="_blank" rel="noopener noreferrer">Google Maps</a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10 py-5">
+    <p class="container-pad text-xs text-ivory/58">© {new Date().getFullYear()} Margo Boutique. {copy.footer.copyright}</p>
+  </div>
+</footer>

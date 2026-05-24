@@ -1,0 +1,117 @@
+---
+import Icon from "@/components/Icon.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CTASection from "@/components/CTASection.astro";
+import { getCallLink, site } from "@/data/site";
+import { t, type Lang } from "@/data/i18n";
+import { getProductTitle, getProductWhatsappUrl, products } from "@/data/products";
+
+interface Props {
+  lang: Lang;
+  canonicalPath: string;
+}
+
+const { lang, canonicalPath } = Astro.props;
+const copy = t(lang);
+const contactProduct = products[6];
+---
+
+<BaseLayout
+  lang={lang}
+  page="contact"
+  canonicalPath={canonicalPath}
+  title={copy.seo.contactTitle}
+  description={copy.seo.homeDescription}
+  image="/images/products/pearl-tailored-button-dress.jpg"
+>
+  <section class="bg-ivory">
+    <div class="container-pad grid gap-8 py-12 md:py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div>
+        <p class="text-xs font-bold uppercase leading-6 tracking-[0.22em] text-rose sm:text-sm">{copy.contact.eyebrow}</p>
+        <h1 class="mt-4 max-w-3xl font-serif text-[clamp(3rem,11vw,5.6rem)] font-semibold leading-[0.98] tracking-normal text-ink">
+          {copy.contact.title}
+        </h1>
+        <p class="mt-5 max-w-xl text-base leading-8 text-espresso/74">
+          {copy.contact.text}
+        </p>
+        <div class="mt-8 grid gap-3 sm:flex sm:flex-wrap">
+          <a class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-center text-sm font-bold text-ivory transition hover:bg-espresso" href={getProductWhatsappUrl(contactProduct, lang)} target="_blank" rel="noopener noreferrer">
+            <Icon name="whatsapp" class="h-4 w-4" /> {copy.buttons.whatsapp}
+          </a>
+          <a class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-espresso/15 bg-cream/70 px-6 text-center text-sm font-bold text-ink transition hover:border-rose/50 hover:text-rose" href={site.instagram} target="_blank" rel="noopener noreferrer">
+            <Icon name="instagram" class="h-4 w-4" /> {copy.buttons.instagram}
+          </a>
+          <a class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-champagne/70 bg-champagne/22 px-6 text-center text-sm font-bold text-espresso transition hover:bg-champagne/35" href={getCallLink()}>
+            <Icon name="phone" class="h-4 w-4" /> {copy.buttons.call}
+          </a>
+        </div>
+      </div>
+      <a href={contactProduct.instagramUrl} target="_blank" rel="noopener noreferrer" class="focus-ring group block overflow-hidden rounded-[1.55rem] bg-cream shadow-2xl shadow-espresso/14">
+        <img
+          class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          src={contactProduct.image}
+          alt={`${getProductTitle(contactProduct, lang)} - Margo Boutique`}
+          width={contactProduct.width}
+          height={contactProduct.height}
+          fetchpriority="high"
+          decoding="async"
+        />
+      </a>
+    </div>
+  </section>
+
+  <section class="section-pad bg-cream/70">
+    <div class="container-pad grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="rounded-[1.35rem] border border-espresso/10 bg-ivory p-5 shadow-sm sm:p-6">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-sage">{copy.contact.details}</p>
+        <dl class="mt-6 grid gap-5">
+          <div>
+            <dt class="text-sm font-bold text-ink">{copy.contact.phone}</dt>
+            <dd class="mt-1 flex flex-wrap gap-3">
+              <a class="focus-ring inline-flex items-center gap-2 text-sm font-semibold text-rose hover:text-ink" href={`https://wa.me/${site.phoneE164}`} target="_blank" rel="noopener noreferrer">
+                <Icon name="whatsapp" class="h-4 w-4" /> {site.phoneDisplay}
+              </a>
+              <a class="focus-ring inline-flex items-center gap-2 text-sm font-semibold text-rose hover:text-ink" href={getCallLink()}>
+                <Icon name="phone" class="h-4 w-4" /> {copy.buttons.call}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-bold text-ink">Instagram</dt>
+            <dd class="mt-1">
+              <a class="focus-ring inline-flex items-center gap-2 text-sm font-semibold text-rose hover:text-ink" href={site.instagram} target="_blank" rel="noopener noreferrer">
+                <Icon name="instagram" class="h-4 w-4" /> @margo_boutique__
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-bold text-ink">{copy.contact.address}</dt>
+            <dd class="mt-1 text-sm leading-6 text-espresso/70">{copy.address}</dd>
+          </div>
+          <div>
+            <dt class="text-sm font-bold text-ink">{copy.contact.note}</dt>
+            <dd class="mt-1 text-sm leading-6 text-espresso/70">{copy.contact.noteText}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="overflow-hidden rounded-[1.35rem] border border-espresso/10 bg-ivory shadow-xl shadow-espresso/10">
+        <iframe
+          title={copy.contact.mapTitle}
+          src="https://www.google.com/maps?q=40.3863036,49.9570057&z=15&output=embed"
+          class="h-[24rem] w-full border-0 md:h-[30rem]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <div class="flex flex-col gap-3 border-t border-espresso/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-sm leading-6 text-espresso/70">{copy.contact.mapText}</p>
+          <a class="focus-ring inline-flex min-h-11 w-full items-center justify-center rounded-full bg-ink px-5 text-center text-sm font-bold text-ivory hover:bg-espresso sm:w-auto" href={site.maps} target="_blank" rel="noopener noreferrer">
+            {copy.buttons.directions}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection lang={lang} title={copy.contact.ctaTitle} text={copy.contact.ctaText} />
+</BaseLayout>

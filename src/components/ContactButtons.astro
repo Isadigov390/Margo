@@ -1,0 +1,41 @@
+---
+import Icon from "@/components/Icon.astro";
+import { getCallLink, getWhatsappLink, site } from "@/data/site";
+import { t, type Lang } from "@/data/i18n";
+
+interface Props {
+  lang: Lang;
+  align?: "left" | "center";
+  compact?: boolean;
+}
+
+const { lang, align = "left", compact = false } = Astro.props;
+const copy = t(lang);
+const baseClass =
+  "focus-ring inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-5 text-center text-sm font-bold leading-5 transition sm:w-auto";
+---
+
+<div class:list={["grid w-full gap-3 sm:flex sm:flex-wrap", align === "center" && "sm:justify-center"]}>
+  <a
+    class={`${baseClass} bg-ink text-ivory shadow-sm hover:bg-espresso ${compact ? "px-4" : ""}`}
+    href={getWhatsappLink(lang)}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon name="whatsapp" class="h-4 w-4" /> {copy.buttons.whatsapp}
+  </a>
+  <a
+    class={`${baseClass} border border-espresso/20 bg-cream/70 text-ink hover:border-rose/50 hover:text-rose ${compact ? "px-4" : ""}`}
+    href={site.instagram}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon name="instagram" class="h-4 w-4" /> {copy.buttons.instagram}
+  </a>
+  <a
+    class={`${baseClass} border border-champagne/60 bg-champagne/20 text-espresso hover:bg-champagne/32 ${compact ? "px-4" : ""}`}
+    href={getCallLink()}
+  >
+    <Icon name="phone" class="h-4 w-4" /> {copy.buttons.call}
+  </a>
+</div>

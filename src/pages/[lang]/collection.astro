@@ -1,0 +1,12 @@
+---
+import CollectionPage from "@/templates/CollectionPage.astro";
+import { getLangFromParam, getPagePath, languages } from "@/data/i18n";
+
+export function getStaticPaths() {
+  return languages.map((language) => ({ params: { lang: language.code } }));
+}
+
+const lang = getLangFromParam(Astro.params.lang);
+---
+
+<CollectionPage lang={lang} canonicalPath={getPagePath(lang, "collection")} />

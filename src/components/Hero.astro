@@ -1,0 +1,100 @@
+---
+import Icon from "@/components/Icon.astro";
+import { getPagePath, t, type Lang } from "@/data/i18n";
+import { getProductCategory, getProductTitle, getProductWhatsappUrl, products } from "@/data/products";
+import { site } from "@/data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = t(lang);
+const heroProduct = products[5];
+const accentProduct = products[2];
+const heroTitle = getProductTitle(heroProduct, lang);
+const accentTitle = getProductTitle(accentProduct, lang);
+---
+
+<section class="relative overflow-hidden bg-ivory">
+  <div class="container-pad grid gap-8 py-8 md:min-h-[calc(88svh-4.5rem)] md:grid-cols-[0.9fr_1.1fr] md:items-center lg:gap-12">
+    <div class="relative z-10 max-w-2xl">
+      <p class="text-xs font-bold uppercase leading-6 tracking-[0.24em] text-rose sm:text-sm">{copy.home.heroEyebrow}</p>
+      <h1 class="mt-5 font-serif text-[clamp(3.25rem,10vw,6.2rem)] font-semibold leading-[0.93] tracking-normal text-ink">
+        {copy.home.heroTitle}
+      </h1>
+      <p class="mt-6 max-w-xl text-base leading-8 text-espresso/74 md:text-lg">
+        {copy.home.heroText}
+      </p>
+      <div class="mt-8 grid gap-3 sm:flex sm:flex-wrap">
+        <a
+          class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-center text-sm font-bold text-ivory shadow-sm transition hover:bg-espresso"
+          href={getProductWhatsappUrl(heroProduct, lang)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon name="whatsapp" class="h-4 w-4" /> {copy.buttons.whatsapp}
+        </a>
+        <a
+          class="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-espresso/15 bg-cream/65 px-6 text-center text-sm font-bold text-ink transition hover:border-rose/50 hover:text-rose"
+          href={site.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon name="instagram" class="h-4 w-4" /> {copy.buttons.instagram}
+        </a>
+        <a
+          class="focus-ring inline-flex min-h-12 items-center justify-center rounded-full border border-champagne/70 bg-champagne/22 px-6 text-center text-sm font-bold text-espresso transition hover:bg-champagne/35"
+          href={getPagePath(lang, "collection")}
+        >
+          {copy.buttons.collection}
+        </a>
+      </div>
+      <div class="mt-9 grid max-w-xl grid-cols-3 border-y border-espresso/10 py-4 text-sm text-espresso/70">
+        <div>
+          <strong class="block font-serif text-2xl text-ink">8</strong>
+          {copy.home.statsModels}
+        </div>
+        <div>
+          <strong class="block font-serif text-2xl text-ink">WA</strong>
+          {copy.home.statsWhatsapp}
+        </div>
+        <div>
+          <strong class="block font-serif text-2xl text-ink">IG</strong>
+          {copy.home.statsInstagram}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-[0.78fr_0.52fr] items-end gap-3 sm:gap-4">
+      <a href={heroProduct.instagramUrl} target="_blank" rel="noopener noreferrer" class="focus-ring group block overflow-hidden rounded-[1.55rem] bg-cream shadow-2xl shadow-espresso/14">
+        <img
+          class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          src={heroProduct.image}
+          alt={`${heroTitle} - Margo Boutique`}
+          width={heroProduct.width}
+          height={heroProduct.height}
+          fetchpriority="high"
+          decoding="async"
+        />
+      </a>
+      <div class="grid gap-3 sm:gap-4">
+        <a href={accentProduct.instagramUrl} target="_blank" rel="noopener noreferrer" class="focus-ring group block overflow-hidden rounded-[1.15rem] bg-cream shadow-xl shadow-espresso/10">
+          <img
+            class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            src={accentProduct.image}
+            alt={`${accentTitle} - Margo Boutique`}
+            width={accentProduct.width}
+            height={accentProduct.height}
+            loading="eager"
+            decoding="async"
+          />
+        </a>
+        <div class="rounded-[1.15rem] border border-espresso/10 bg-ivory/82 p-4 shadow-sm backdrop-blur">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-sage">{getProductCategory(heroProduct, lang)}</p>
+          <p class="mt-2 font-serif text-xl font-semibold leading-tight text-ink">{heroTitle}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

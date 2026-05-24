@@ -1,0 +1,147 @@
+# Margo Boutique
+
+Frontend-only Astro website for **Margo Boutique**, a women's fashion store in Baku.
+
+## Tech Stack
+
+- Astro static output
+- Tailwind CSS v4
+- TypeScript-ready Astro files
+- No backend, database, login, payments, or server actions
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+The local site will usually run at `http://localhost:4321`.
+
+## Build
+
+```bash
+npm run build
+```
+
+The production files are generated in `dist/`.
+
+## Deploy
+
+### GitHub Pages
+
+This project is prepared for free static deployment with GitHub Pages.
+
+The workflow at `.github/workflows/deploy.yml` installs dependencies, builds Astro, uploads `dist/`, and deploys it to GitHub Pages whenever you push to `main`.
+
+Manual GitHub setup:
+
+- Push this repository to GitHub.
+- In the repository, go to **Settings -> Pages**.
+- Under **Build and deployment**, set **Source** to **GitHub Actions**.
+- Keep `package-lock.json` committed so the Astro GitHub Action detects npm.
+
+For a normal project page such as `https://<username>.github.io/Margo/`, no paid hosting is required and no extra config is needed. The Astro config automatically uses the repository name as the GitHub Pages base path during GitHub Actions builds.
+
+For a custom domain:
+
+- Add your domain in **Settings -> Pages -> Custom domain**.
+- Create `public/CNAME` containing only the domain, for example `www.example.com`.
+- Configure DNS at your domain provider using GitHub Pages records.
+- With a custom domain, the Astro config automatically removes the repository base path.
+
+## Product Images
+
+Real product images are loaded from:
+
+```text
+public/images/products/
+```
+
+Current product files:
+
+- `midnight-dot-grace-midi-dress.jpg`
+- `desert-breeze-tribal-palazzo-set.jpg`
+- `royal-azure-knit-maxi-dress.jpg`
+- `olive-mocha-polka-duo-maxi-dresses.jpg`
+- `snow-dot-chic-trouser-set.jpg`
+- `noir-ivory-pleated-mini-dress-duo.jpg`
+- `pearl-tailored-button-dress.jpg`
+- `eclipse-butter-satin-maxi-dress-duo.jpg`
+
+Product titles, descriptions, Instagram links, and WhatsApp messages live in:
+
+```text
+src/data/products.ts
+```
+
+Keep replacement images close to the current portrait ratio (`1122x1402`) for the cleanest card layout.
+
+## Logo
+
+The header and footer logo path is controlled in `src/data/site.ts`:
+
+```text
+logo: withBase("/images/margo-boutique-logo.svg")
+```
+
+Replace `public/images/margo-boutique-logo.svg` with the final boutique logo, or save a new file such as `public/images/margo-logo.png` and update the `logo` value in `src/data/site.ts`.
+
+## Update Contact Links
+
+Business details live in:
+
+```text
+src/data/site.ts
+```
+
+Update this file to change:
+
+- WhatsApp phone number
+- Phone call link
+- Instagram URL
+- Google Maps URL
+- Address
+- Opening hours
+- Site URL used for SEO canonical and Open Graph tags
+
+The phone call button uses a mobile-friendly `tel:+994703701767` link.
+
+## Pages
+
+- `/` Azerbaijani home page
+- `/collection` Azerbaijani collection page
+- `/contact` Azerbaijani contact page
+- `/az`, `/az/collection`, `/az/contact`
+- `/ru`, `/ru/collection`, `/ru/contact`
+- `/en`, `/en/collection`, `/en/contact`
+
+## Languages
+
+The site supports:
+
+- Azerbaijani
+- Russian
+- English
+
+Shared navigation, footer labels, language labels, addresses, and opening hours can be edited in:
+
+```text
+src/data/i18n.ts
+src/data/site.ts
+```
+
+Product catalogue content and per-product WhatsApp prefilled messages live in:
+
+```text
+src/data/products.ts
+```
+
+## Theme
+
+The site supports light and dark mode with a small inline script and CSS variables in:
+
+```text
+src/styles/global.css
+src/layouts/BaseLayout.astro
+```
